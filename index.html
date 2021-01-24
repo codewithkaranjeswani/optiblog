@@ -442,8 +442,8 @@
       where \(\bc \in \mathbb{R}^n\), \(\bx \in \mathbb{R}^n\), \(\bb \in \mathbb{R}^m\) and \(\bA \in \mathbb{R}^{m
       \times n}\).
       This part is called the formulation of the Linear Program. Now we have to convert it to Standard form for solving
-      it using Revised Simplex Method. We can also solve this without any knowledge of how the algorithm works by using
-      software packages like PuLP with solvers like AMPL and CPLEX (you can easily find opensource solver packages
+      it using Revised Simplex Method. Or we can also solve this without any knowledge of how the algorithm works by
+      using software packages like PuLP with solvers like AMPL and CPLEX (you can easily find opensource solvers
       online).
     </p>
     <h2>Standard Form</h2>
@@ -461,8 +461,8 @@
     <ol>
       <li>Here rows of \(\bA\) has the co-efficients of respective variables the constraints, and the \(\bb\) has the
         right hand side constant. So we have \(m\) constraints and \(n\) variables.</li>
-      <li>Notice that we should have equality constraints only, so <i>slack variables</i> or <i>artificial
-          variables</i> are used to be able to solve problems with inequality constraints.</li>
+      <li>Notice that we should have equality constraints only, so <i>slack variables</i> or <i>surplus variables</i>
+        are used to be able to solve problems with inequality constraints.</li>
       <li>If any variable is free (i.e. no restriction on sign), then we must split it into 2 variables with a positive
         part and a negative part, such that we get all variables non-negative.</li>
     </ol>
@@ -479,7 +479,7 @@
       the
       multiplier for the bounded constraints. <br>
 
-      First order necessary conditions from theory of constrained optimization are wriiten as follows:
+      First order necessary conditions from theory of constrained optimization are written as follows:
       \begin{align*}
       \bA^T\lambda + \bs = \bc\\
       \bA \bx = \bb\\
@@ -487,6 +487,32 @@
       \bs \geq \bze\\
       x_i s_i = 0 \text{ , i = } 1, 2, ..., n
       \end{align*}
+      These are just the First order necessary conditions, and these are also sufficient for this particular case
+      because the problem is convex and there is only a single solution, which is the global solution. <br>
+      The complementarity conditions essentially says that for each index \(i\), at least one of the components
+      \(\bx_i\) or \(\bs_i\) must be zero. This is often writen as \(\bx^T \bs = 0\), because \(\bx_i\) or \(\bs_i\) are
+      non-negative. <br><br>
+      Let \((\bx^*, \lambda^*, \bs^*)\) denote the vector triple that satisfies the KKT conditions. By combining the 3
+      equalities, we find that,
+      \begin{align*}
+      \bc^T \bx^* = (\bA^T \lambda^* + \bs)^T \bx^* = (\bA \bx^*)^T \lambda^* = \bb^T \lambda^*
+      \end{align*}
+      And \(\bb^T \lambda^*\) is the objective function for the dual problem. This shows that the primal and the dual
+      objectives are equal for vector triples that satisfy KKT conditions. <br><br>
+      It is also easy to show that KKT conditions are sufficient for finding a global minimum of the linear program. Let
+      \(\widetilde{\bx}\) be any other feasible point, so that \(\bA \widetilde{\bx} = \bb\) and \(\widetilde{\bx} \ge
+      \bze\). Then
+      \begin{align*}
+      \bc^T \widetilde{\bx} = (\bA^T \lambda^* + \bs)^T \widetilde{\bx} \ge \bb^T \lambda^* = \bc^T \bx^*
+      \end{align*}
+      The result follows trivially from \(\widetilde{\bx} \ge \bze\) and \(\bs \ge \bze\). This inequality tells us that
+      no other feasible point can have objective value lower than \(\bc^T \bx^*\). We can even say that the feasible
+      point \(\widetilde{\bx}\) is optimal if and only if.
+      \begin{align*}
+      \bs^T \widetilde{\bx} = 0
+      \end{align*}
+      Since otherwise the inequality in previous equation is strict. In other words, when \(\bs_i \gt 0\), then we must
+      have \(\widetilde{\bx}_i = 0\) for all solutions.
     </p>
     <!-- <h2>Dual Problem</h2>
     <p>
@@ -514,7 +540,8 @@
     </p> -->
     <dt-byline></dt-byline>
     <p>
-      Most material presented here is from our course reference text, "Numerical Optimization" <dt-cite key="noce">
+      Most material presented here is from our course reference text, "Numerical Optimization", by Jorge Nocedal and
+      Stephen J. Wright. <dt-cite key="noce">
       </dt-cite><br>
       Dantzig's paper on Linear Programming <dt-cite key="dant"></dt-cite>
     </p>
