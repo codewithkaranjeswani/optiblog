@@ -1,6 +1,5 @@
 <!doctype html>
 <meta charset="utf-8">
-<!-- <script src="https://distill.pub/template.v1.js"></script> -->
 <script src="template.js"></script>
 <script src="p5/p5.js"></script>
 <script src="p5/sketch.js"></script>
@@ -46,10 +45,23 @@
     text-align: center;
     border: 3px solid green;
   }
+
+  .l-screen-inset {
+    text-align: center;
+    margin: 10px;
+    padding: 20px;
+  }
+
+  .l-page-outset {
+    /* border: 2px solid black; */
+    text-align: justify;
+    margin: 10px;
+    padding: 0px;
+  }
 </style>
 
 <dt-article>
-  <h1>Constrained Optimization <br> and Linear Programming</h1>
+  <h1>Constrained Optimization &<br>Linear Programming</h1>
   <h2>Introducing concepts from Constrained Optimization</h2>
   <dt-byline></dt-byline>
   <section>
@@ -364,7 +376,8 @@
     <p>
       The term "program" was used for military plans, schedules of training, and deployment of combat units. This is
       far before the term was used in the computer science for referring to a set of instructions. The reason is that
-      Linear Program was first used to replace a set of practical planning problem in the military. <br>
+      Linear Program was first used to replace a set of practical planning problem in the military. <dt-cite key="dant">
+      </dt-cite><br>
       Linear programming is a technique for the optimization of a linear objective function, subject to linear
       equality and linear inequality constraints. The problem definition is as follows <br>
       \begin{align*}
@@ -573,10 +586,9 @@
     </p> -->
     <dt-byline></dt-byline>
     <p>
-      Most material presented here is from our course reference text, "Numerical Optimization", by Jorge Nocedal and
-      Stephen J. Wright. <dt-cite key="noce">
-      </dt-cite><br>
-      Dantzig's paper on Linear Programming <dt-cite key="dant"></dt-cite>
+      Most material presented here is from the reference textbook followed in our course, "Numerical Optimization", by
+      Jorge Nocedal and Stephen J. Wright. <dt-cite key="noce">
+      </dt-cite>
     </p>
   </section>
 </dt-article>
@@ -584,7 +596,7 @@
 <dt-appendix>
   <h3>Author Contributions</h3>
   <p>Ghanshyam Chandra: Theory of Constrained Optimization</p>
-  <p>Karan Jeswani: Linear Programming</p>
+  <p>Karan Jeswani: Linear Programming, and interactive diagram.</p>
 </dt-appendix>
 
 <script type="text/bibliography">
