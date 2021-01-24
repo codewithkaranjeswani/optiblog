@@ -7,7 +7,10 @@
 
 <script>
 window.MathJax = {
-	tags: 'ams', inlineMath: [['$', '$'], ['\\(', '\\)']],
+	tags: 'ams',
+	tex: {
+		inlineMath: [['$', '$'], ['\\(', '\\)']]
+	},
   tex: {
     macros: {
 			bze:"{\\boldsymbol{\\textbf{0}}}",
@@ -34,12 +37,13 @@ window.MathJax = {
 </script>
 
 
-<dt-article class="l-page">
+<dt-article>
   <h1>Constrained Optimization <br> and Linear Programming</h1>
   <h2>Introducing concepts from Constrained Optimization</h2>
   <dt-byline></dt-byline>
   <section>
     <h2><b>Constrained Optimization</b></h2>
+    <h3>Introduction</h3>
     <p>The general formulation of the constrained optimization problem is:</p>
     <p>
       \begin{align*}
@@ -60,26 +64,33 @@ window.MathJax = {
       \begin{align*}
       c_{1}(\bx) = -x_{1}^{2} - x_{2}^{2} +c^{2} , \;\; c_{1}(\bx) \geq 0
       \end{align*}
-      The feasible set \(\Omega\) for this single constraint contains all the points inside the circle of radius \(c\) including the perimeter. For multiple constraints, the feasible set will include points that satisfy all constraints i.e. lie in the common region defined by the constraints. <br>
+      The feasible set \(\Omega\) for this single constraint contains all the points inside the circle of radius \(c\) including the perimeter. For multiple constraints, the feasible set will include points that satisfy all constraints i.e. lie in the common region defined by the constraints.
+    </p>
+    <h3>Types of Solutions</h3>
+    <p>
       The most natural thing to do now is to find the solution/s (maxima or minima), but there are different kinds of solutions possible. Types of solutions are:
       <ol>
-      	<li>Local Solution: A vector \(\bx^* \in \Omega\) is called a local solution (local maxima or local minima) if the objective function value at \(\bx^*\) is lesser than any other feasible point in its neighbourhood. i.e. \( f(\bx^*) \le f(\bx)\) for \(\bx \in \mathcal{N}\) </li>
-      	<li>Strict Local Solution: A vector </li>
-      	<li>Isolated Local Solution: </li>
+      	<li>Local Solution: A vector \(\bx^* \in \Omega\) is called a <i>local solution</i> (local maxima or local minima) if the objective function value at \(\bx^*\) is lesser than any other feasible point in its neighbourhood. i.e. \( f(\bx^*) \le f(\bx)\) for \(\bx \in \mathcal{N} \cap \Omega\) </li>
+      	<li>Strict Local Solution: A vector \(\bx^* \in \Omega\) is called a <i>strict local solution</i> if, for \(\bx \in \mathcal{N} \cap \Omega\), \(f(\bx^*) < f(\bx)\), which means that the solution vector must provide the smallest function value in its neighbourhood while still being a feasible point. The strict part is that equal sign is not acceptable here.</li>
+      	<li>Isolated Local Solution: A vector \(\bx^* \in \Omega\) is called a <i>isolated local solution</i> if \(\bx^* \in \Omega\) and there is a neighbourhood \(\mathcal{N}\) of \(\bx^*\) such that \(\bx^*\) is the only local solution in \(\mathcal{N} \cap \Omega\). Note that isolated solutions are strict but the reverse is not true.</li>
       	<li>Global Solution: A vector \(\bx^* \in \Omega\) is called a global solution (global maxima or local minima) if the objective function value at \(\bx^*\) is lesser than any other feasible point in the entire feasible set. i.e. \( f(\bx^*) \le f(\bx)\) for \(\bx \in \Omega\) </li>
       </ol>
     </p>
-    <p><b>Characterized Solution</b>
+    <p>
+      For a convex objective function, where the function and the constraints are smooth, we can prove that the global solution is the same as the local solution. Because there is only a single extreme point.
+    </p>
+    <h3>Characteristics of the Solution</h3>
+    <p>
+    	Now, in the Unconstrained Optimization, we found certain conditions that guarantee the existence of a solution. And we can determine the properties of the objective function and its first and second gradient, which give us lot of information about the optimal points. Recall the Optimality conditions for the Unconstrained Optimization case:
+    	<ul>
+    		<li><i>Necessary Conditions</i>: Local unconstrained minimizers have \(\nabla f(\bx^*) = \bze\) and \(\nabla^2 f(\bx^*) \ge \bze\) i.e. Hessian of \(f\) is positive semi-definite.</li>
+    		<li><i>Sufficient Conditions</i>: Any point \(\bx^*\) at which \(\nabla f(\bx^*) = \bze\) and \(\nabla^2 f(\bx^*) \gt \bze\) i.e. Hessian of \(f\) is positive definite, is a strong local minimizer of \(f\).</li>
+    	</ul>
     </p>
     <p>
-    <ol>
-      <li>Global</li>
-      <li>Local</li>
-    </ol>
+    	First order conditions refer to gradient equation, and the Second order conditions refer to the Hessian equation. Similar conditions must be derived for Constrained Optimization case as well. We will do this with 2 examples, to get a geometric viewpoint, and then state the conditions mathematically.
     </p>
-    <p><b>Optimality Conditions</b>
-    </p>
-    <p>
+<!--     <p>
     <ol>
       <li>Necessary \(1^{st}\) Order Conditions</li>
       <li>Sufficient \(2^{nd}\) Order Conditions</li>
@@ -93,23 +104,26 @@ window.MathJax = {
       &&&\bx \in \mathcal{N}(\bx^{*})\\
       &&&\bx,\bx^{*} \in \Omega
       \end{align*}
-    </p>
-    <p><b>Active Set A(x): (Check Definition)</b>
+    </p> -->
+    <h3>Definition of the Active Set \(\mathcal{A}(\bx)\)</h3>
+    <p>
+    	The active set \(\mathcal{A}(\bx)\) at any feasible \(\bx\) consists of the equality constraint indices from \(\mathcal{E}\) together with the indices of the inequality constraints \(i\) for which \(c_i(\bx) = 0\).
     </p>
     <p>
       \begin{align*}
       A(\bx)=\mathcal{E} \cup \{ i \in \mathcal{I} \hspace{0.2cm} | \hspace{0.2cm} c_{i}(\bx)=0\}
       \end{align*}
-      Set of indices for which inequality constraints are active + equal indices.
+      At the feasible point \(\bx\), the inequality constraint \(i \in \mathcal{I}\) is said to be <i>active</i> if \(c_i(\bx) = 0\) and <i>inactive</i> if the strict inequality \(c_i(\bx) \gt 0\) is satisfied. 
     </p>
-    <p><b>Example 1: Single Equality Constraint</b>
+    <h3>Example 1: Single Equality Constraint</h3>
+    <p>
       \begin{align*}
       \min_{\bx \in \mathbb{R}^2} &&& x_{1} + x_{2}\\ \\
       \text{subject to} &&& x_{1}^{2} + x_{2}^{2} - 2 = 0 &&\\ \\
       f(\bx) = x_{1} + x_{2} && \mathcal{I} = \phi \text{ , } \mathcal{E} = \{ 1 \}
       \end{align*}
+      <img src="images/Circle_Equality.png" width="600" height="500"> <br>
       At the solution :
-      <img src="images/Circle_Equality.png" width="600" height="500">
       \begin{align*}
       \nabla f \hspace{0.2cm} || \hspace{0.2cm} \nabla c_{1}
       \end{align*}
@@ -155,8 +169,7 @@ window.MathJax = {
       \nabla_{\bx} \mathcal{L}(\bx^{*},\lambda^{*}) = 0
       \end{align*}
     </p>
-    <p><b>Example 2: Single Inequality Constraint</b>
-    </p>
+    <h3>Example 2: Single Inequality Constraint</h3>
     <p>
       \begin{align*}
       \min_{\bx \in \mathbb{R}^2} &&& x_{1} + x_{2} &&&\\ \\
@@ -248,7 +261,6 @@ window.MathJax = {
   <dt-byline></dt-byline>
   <section>
     <h2><b>Linear Programming</b></h2>
-    <section>
       <h2>Introduction</h2>
       <p>
         The term "program" was used for military plans, schedules of training, and deployment of combat units. This is
@@ -268,15 +280,11 @@ window.MathJax = {
         The reason Simplex Method is interesting, is that it becomes better
         than the Brute force solutions, as the problem grows bigger.
       </p>
-    </section>
-    <section>
-      <h2>Example of Linear Programming Problem</h2>
+      <h2>Example of Linear Program</h2>
       <p>
 
       </p>
-    </section>
 
-    <section>
       <h2>Introduction</h2>
       <p>
       <ul>
@@ -290,8 +298,6 @@ window.MathJax = {
           largest) value if such a point exists.</li>
       </ul>
       </p>
-    </section>
-    <section>
       <h2>Geometry of the Feasible Set</h2>
       <p>
         Difference between Polyhedra and polytope. <br>
@@ -305,8 +311,6 @@ window.MathJax = {
 
         Todo: Definition of a corner point (extreme point).
       </p>
-    </section>
-    <section>
       <h2>Standard Form</h2>
       <p>
         The Simplex Method requires that the problem is reduced to the following standard form before we apply the
@@ -325,8 +329,6 @@ window.MathJax = {
         with equality constraints, so <b>slack variables</b> are used to be able to solve problems with inequality
         constraints.
       </p>
-    </section>
-    <section>
       <h2>Optimality Conditions</h2>
       <p>
         KKT conditions here with LICQ. LICQ not done.<br>
@@ -349,8 +351,6 @@ window.MathJax = {
         x_i s_i = 0 \text{ , i = } 1, 2, ..., n
         \end{align*}
       </p>
-    </section>
-    <section>
       <h2>Dual Problem</h2>
       <p>
         Since the standard form deals only with the minimization problem, we must have a method to convert a
@@ -358,23 +358,16 @@ window.MathJax = {
 
         The primal and the dual, both have the same solution.
       </p>
-    </section>
-
-    <section>
       <h2>Revised Simplex Method</h2>
       <p>
         Why does the solution lie on the extreme points? <br>
 
         How to go from one corner point to the other. Which is the direction of decrease of objective function. <br>
       </p>
-    </section>
-    <section>
       <h2>Linear Algebra in Simplex Method</h2>
       <p>
 
       </p>
-    </section>
-    <section>
       <h2>Others</h2>
       <p>
       <ol>
@@ -383,7 +376,6 @@ window.MathJax = {
       </ol>
       </p>
       <dt-byline></dt-byline>
-    </section>
     <p>
       Most material presented here is from our course reference text, "Numerical Optimization" <dt-cite key="noce">
       </dt-cite><br>
