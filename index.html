@@ -2,6 +2,9 @@
 <meta charset="utf-8">
 <!-- <script src="https://distill.pub/template.v1.js"></script> -->
 <script src="template.js"></script>
+<script src="p5/p5.js"></script>
+<script src="p5/sketch.js"></script>
+<script src="p5/p5.sound.min.js"></script>
 <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
 <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 
@@ -38,7 +41,12 @@
   - CDS-IISc: http://cds.iisc.ac.in/
   - CDS-IISc: http://cds.iisc.ac.in/
 </script>
-
+<style>
+  .center {
+    text-align: center;
+    border: 3px solid green;
+  }
+</style>
 
 <dt-article>
   <h1>Constrained Optimization <br> and Linear Programming</h1>
@@ -144,10 +152,10 @@
       increasing in the north-west direction, so clearly the minima of the function is at the point \(\bx^* =
       [-1,-1]^T\). <i>Remember that the gradient points in the direction of increasing function value.</i>
     </p>
-    <figure>
-      <img src="images/Circle_Equality.png" width="600" height="500" class="center">
-      <figcaption>Figure 1: Showing directions of constraint normal \(\nabla c_1\) and \(\nabla f\) for \(\bx\) in the
-        feasible set
+    <figure class="center">
+      <img src="images/example_1.png">
+      <figcaption>Figure 1: Showing directions of constraint normal \(\nabla c_1(\bx)\) and \(\nabla f(\bx)\) for
+        \(\bx\) in the feasible set. <dt-cite key="noce"></dt-cite>
       </figcaption>
     </figure>
     <p>
@@ -185,11 +193,20 @@
       On the other hand, if there is no direction \(\bd\) exist that satisfy the above 2 conditions, then \(\bx\) is
       \(\bx^{*}\), the local minimizer. The only way this can happen is when \(\nabla f\) and \(\nabla c\) are parallel.
     </p>
-    <figure>
-      <img src="images/Line_Equality.png" width="500" height="400" class="center">
-      <figcaption>Figure 2: Showing that the search direction should be perpendicular to \(\nabla c_1\) and at an obtuse
-        angle with \(\nabla f\)</figcaption>
+    <figure class="center">
+      <div id="sketch-container"></div>
+      <div id="slid-container"></div>
+      <figcaption>Interactive: Showing that the search direction should be perpendicular to \(\nabla c_1(\bx)\)
+        ("grad_c(x)" in the diagram) and at an obtuse angle with \(\nabla f(\bx)\) ("grad_f(x)" in the diagram). Any
+        direction in the shaded region is a valid search direction. If the shaded region does not exist, then you have
+        the optimal point! [Slider provides different angles for "grad_c(x)"].
+      </figcaption>
     </figure>
+    <!-- <figure>
+      <img src="images/Line_Equality.png" width="500" height="400" class="center">
+      <figcaption>Figure 2: Showing that the search direction should be perpendicular to \(\nabla c_1(\bx)\) and at an
+        obtuse angle with \(\nabla f(\bx)\)</figcaption>
+    </figure> -->
     <p>
       If, in fact \(\nabla f\) and \(\nabla c\) are not parallel, we can set:
       \begin{align*}
@@ -246,6 +263,14 @@
       which is the <i>Steepest Descent Direction</i>. <br>
       This does not work when \(\nabla f(\bx) = 0\), which means we can
       not find a new step in that case. So we have reached the local minimizer \(\bx^*\).<br>
+    <figure class="center">
+      <img src="images/example_21.png">
+      <figcaption>Figure 3: Showing possible search directions for Case 1, when feasible point is inside the region and
+        Case 2, when the feasible point lies on the boundary.<dt-cite key="noce"></dt-cite>
+      </figcaption>
+    </figure>
+    </p>
+    <p>
       <b>Case 2</b>: Consider that \(\bx\) is on the boundary of the circle, so that \(c_1(\bx) = 0\). The conditions
       therefore become.
       \begin{align*}
@@ -262,6 +287,13 @@
       Here it is important to note the sign of the multipier. Based on this the intersection of the regions defined by
       both equations change.
     </p>
+    <figure class="center">
+      <img src="images/example_22.png">
+      <figcaption>Figure 4: A direction d that satisfies both equations \(\nabla c_{1}(\bx)^{T} \bs \geq 0\) and
+        \(\nabla f(\bx)^{T} \bs \lt 0\) lies in the intersection of a closed half-plane and an open half-plane.<dt-cite
+          key="noce"></dt-cite>
+      </figcaption>
+    </figure>
     <p>
       The Optimality conditions for the inequality constraint for both the cases can hence be summarized using the
       Lagrangian function as follows:
@@ -503,7 +535,8 @@
       \(\widetilde{\bx}\) be any other feasible point, so that \(\bA \widetilde{\bx} = \bb\) and \(\widetilde{\bx} \ge
       \bze\). Then
       \begin{align*}
-      \bc^T \widetilde{\bx} = (\bA^T \lambda^* + \bs)^T \widetilde{\bx} \ge \bb^T \lambda^* = \bc^T \bx^*
+      \bc^T \widetilde{\bx} = (\bA^T \lambda^* + \bs)^T \widetilde{\bx} = \bb^T \lambda + \bs^T \widetilde{\bx} \ge
+      \bb^T \lambda^* = \bc^T \bx^*
       \end{align*}
       The result follows trivially from \(\widetilde{\bx} \ge \bze\) and \(\bs \ge \bze\). This inequality tells us that
       no other feasible point can have objective value lower than \(\bc^T \bx^*\). We can even say that the feasible
@@ -512,7 +545,7 @@
       \bs^T \widetilde{\bx} = 0
       \end{align*}
       Since otherwise the inequality in previous equation is strict. In other words, when \(\bs_i \gt 0\), then we must
-      have \(\widetilde{\bx}_i = 0\) for all solutions.
+      have \(\widetilde{\bx}_i = 0\) for all solutions \(\widetilde{\bx}\).
     </p>
     <!-- <h2>Dual Problem</h2>
     <p>
